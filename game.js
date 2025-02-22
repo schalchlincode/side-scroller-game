@@ -22,12 +22,27 @@ function preload() {
     frameWidth: 80, // Adjust this based on your sprite size
     frameHeight: 110,
   });
+
+  this.load.image("tiles", "assets/tiles.png");
 }
 
 function create() {
   // Add player sprite at (400, 300) using the first frame of the spritesheet
   this.player = this.physics.add.sprite(400, 300, "player", 0);
   this.player.setCollideWorldBounds(true); // Prevents leaving the screen
+
+  // ADD TILEMAP BELOW:
+  const map = this.make.tilemap({
+    tileWidth: 32,
+    tileHeight: 32,
+    width: 10,
+    height: 10,
+  });
+  const tileset = map.addTilesetImage("tiles", "tiles");
+  const layer = map.createBlankLayer("Ground", tileset, 0, 0);
+  layer.fill(0); // Fill map with a single tile (index 0)
+
+  console.log("Tilemap created!"); // Debugging
 
   // Define animations (adjust frame numbers if needed)
   this.anims.create({
