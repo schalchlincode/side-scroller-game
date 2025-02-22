@@ -32,7 +32,7 @@ function create() {
   // Define animations (adjust frame numbers if needed)
   this.anims.create({
     key: "walk-down",
-    frames: this.anims.generateFrameNumbers("player", { start: 18, end: 23 }),
+    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
     frameRate: 10,
     repeat: -1,
   });
@@ -53,7 +53,35 @@ function create() {
 
   this.anims.create({
     key: "walk-up",
-    frames: this.anims.generateFrameNumbers("player", { start: 0, end: 5 }),
+    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frameRate: 10,
+    repeat: -1,
+  });
+
+  this.anims.create({
+    key: "walk-up-left",
+    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frameRate: 10,
+    repeat: -1,
+  });
+
+  this.anims.create({
+    key: "walk-up-right",
+    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frameRate: 10,
+    repeat: -1,
+  });
+
+  this.anims.create({
+    key: "walk-down-left",
+    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frameRate: 10,
+    repeat: -1,
+  });
+
+  this.anims.create({
+    key: "walk-down-right",
+    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
     frameRate: 10,
     repeat: -1,
   });
@@ -65,6 +93,29 @@ function create() {
 function update() {
   this.player.setVelocity(0); // Stop movement when no keys are pressed
 
+  let movingHorizontally = false;
+  let movingVertically = false;
+  let animKey = null;
+
+  if (this.cursors.left.isDown && this.cursors.up.isDown) {
+    this.player.setVelocity(-200, -200);
+    this.player.anims.play("walk-up-left", true);
+    return;
+  } else if (this.cursors.right.isDown && this.cursors.up.isDown) {
+    this.player.setVelocity(200, -200);
+    this.player.anims.play("walk-up-right", true);
+    return;
+  } else if (this.cursors.left.isDown && this.cursors.down.isDown) {
+    this.player.setVelocity(-200, 200);
+    this.player.anims.play("walk-down-left", true);
+    return;
+  } else if (this.cursors.right.isDown && this.cursors.down.isDown) {
+    this.player.setVelocity(200, 200);
+    this.player.anims.play("walk-down-right", true);
+    return;
+  }
+
+  // Regular movement
   if (this.cursors.left.isDown) {
     this.player.setVelocityX(-200);
     this.player.anims.play("walk-left", true);
@@ -78,6 +129,6 @@ function update() {
     this.player.setVelocityY(200);
     this.player.anims.play("walk-down", true);
   } else {
-    this.player.anims.stop(); // Stop animation when idle
+    this.player.anims.stop();
   }
 }
