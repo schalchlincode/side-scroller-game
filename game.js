@@ -19,7 +19,7 @@ const game = new Phaser.Game(config);
 
 function preload() {
   this.load.spritesheet("player", "assets/player_spritesheet.png", {
-    frameWidth: 120, // Adjust this based on your sprite size
+    frameWidth: 70, // Adjust this based on your sprite size
     frameHeight: 110,
   });
 }
