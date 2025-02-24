@@ -22,9 +22,16 @@ function preload() {
     frameWidth: 80, // Adjust this based on your sprite size
     frameHeight: 110,
   });
+
+  this.load.image("Tiles", "assets/Tiles.png"); // Tileset image
+  this.load.tilemapTiledJSON("map", "assets/map.json"); // Tilemap JSON file
 }
 
 function create() {
+  // Load the tilemap
+  const map = this.make.tilemap({ key: "map" });
+  const tileset = map.addTilesetImage("Tiles", "Tiles"); // Match name in Tiled
+  const backgroundLayer = map.createLayer("Tile Layer 1", tileset, 0, 0);
   // Add player sprite at (400, 300) using the first frame of the spritesheet
   this.player = this.physics.add.sprite(400, 300, "player", 0);
   this.player.setCollideWorldBounds(true); // Prevents leaving the screen
@@ -89,6 +96,10 @@ function create() {
 
   // Enable keyboard input
   this.cursors = this.input.keyboard.createCursorKeys();
+
+  console.log("Map loaded:", map);
+  console.log("Tileset loaded:", tileset);
+  console.log("Background Layer:", backgroundLayer);
 }
 
 function update() {
