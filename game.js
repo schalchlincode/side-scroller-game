@@ -130,15 +130,7 @@ function create() {
   console.log("Tileset loaded:", tileset);
   console.log("Background Layer:", backgroundLayer);
 
-  this.inventoryText = this.add.text(16, 16, "Inventory: ", {
-    fontSize: "16px",
-    fill: "#fff",
-    backgroundColor: "#000",
-    padding: { x: 10, y: 5 },
-  });
-
-  this.inventoryText.setDepth(10);
-  this.inventoryText.setScrollFactor(0);
+  createInventoryUI.call(this); // ← Fix: Now inventory UI exists before we use it
 
   this.toggleInventoryKey = this.input.keyboard.addKey(
     Phaser.Input.Keyboard.KeyCodes.I
@@ -146,9 +138,20 @@ function create() {
 }
 
 function update() {
+  // Toggle inventory visibility when "I" is pressed
   if (Phaser.Input.Keyboard.JustDown(this.toggleInventoryKey)) {
-    this.inventoryVisible = !this.inventoryVisible; // Toggle visibility
-    this.inventoryText.setVisible(this.inventoryVisible); // Show or hide text
+    this.inventoryVisible = !this.inventoryVisible;
+
+    // Toggle visibility for inventory UI elements
+    this.inventoryBG.setVisible(this.inventoryVisible);
+    this.inventoryText.setVisible(this.inventoryVisible);
+
+    // Ensure all item icons follow visibility state
+    if (this.inventoryIcons) {
+      this.inventoryIcons.forEach((icon) => {
+        icon.setVisible(this.inventoryVisible);
+      });
+    }
   }
 
   this.player.setVelocity(0); // Stop movement when no keys are pressed
@@ -187,4 +190,20 @@ function update() {
   } else {
     this.player.anims.stop();
   }
+}
+
+function createInventoryUI() {
+  // Background panel
+  this.inventoryBG = this.add.rectangle(100, 100, 300, 200, 0x000000, 0.7); // Semi-transparent black box
+  this.inventoryBG.setOrigin(0, 0);
+  this.inventoryBG.setDepth(10);
+  this.inventoryBG.setVisible(false); // Hide by default
+
+  // Inventory text
+  this.inventoryText = this.add.text(110, 110, "Inventory:", {
+    fontSize: "20px",
+    fill: "#fff",
+  });
+  this.inventoryText.setDepth(11);
+  this.inventoryText.setVisible(false);
 }
