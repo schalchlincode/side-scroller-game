@@ -30,6 +30,7 @@ function preload() {
 
 function create() {
   this.inventory = []; // Store collected items
+  this.inventoryVisible = true;
 
   // Load the tilemap
   const map = this.make.tilemap({ key: "map" });
@@ -137,9 +138,19 @@ function create() {
   });
 
   this.inventoryText.setDepth(10);
+  this.inventoryText.setScrollFactor(0);
+
+  this.toggleInventoryKey = this.input.keyboard.addKey(
+    Phaser.Input.Keyboard.KeyCodes.I
+  );
 }
 
 function update() {
+  if (Phaser.Input.Keyboard.JustDown(this.toggleInventoryKey)) {
+    this.inventoryVisible = !this.inventoryVisible; // Toggle visibility
+    this.inventoryText.setVisible(this.inventoryVisible); // Show or hide text
+  }
+
   this.player.setVelocity(0); // Stop movement when no keys are pressed
 
   if (this.cursors.left.isDown && this.cursors.up.isDown) {
