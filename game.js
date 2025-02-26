@@ -25,9 +25,12 @@ function preload() {
 
   this.load.image("Tiles", "assets/Tiles.png"); // Tileset image
   this.load.tilemapTiledJSON("map", "assets/map.json"); // Tilemap JSON file
+  this.load.image("stuffedPeanut", "assets/stuffedPeanut.png");
 }
 
 function create() {
+  this.inventory = []; // Store collected items
+
   // Load the tilemap
   const map = this.make.tilemap({ key: "map" });
   const tileset = map.addTilesetImage("Tiles", "Tiles"); // Match name in Tiled
@@ -36,6 +39,31 @@ function create() {
   this.player = this.physics.add.sprite(400, 300, "player", 0);
   this.player.setCollideWorldBounds(true); // Prevents leaving the screen
   this.player.setDepth(1); // Ensures the player appears above other objects
+
+  this.items = this.physics.add.group(); // Create a group for items
+  let peanut = this.items.create(150, 150, "stuffedPeanut"); // Spawn peanut at (150,150)
+  peanut.setScale(2);
+  peanut.setDepth(1); // Ensure it’s above other objects
+
+  // Define `collectItem()` inside `create()` to bind `this`
+  this.collectItem = (player, item) => {
+    item.destroy(); // Remove peanut from world
+    this.inventory.push("Stuffed Peanut"); // Add to inventory
+
+    this.inventoryText.setText("Inventory: " + this.inventory.join(", "));
+
+    console.log("Inventory:", this.inventory);
+
+    console.log("Inventory Text Object:", this.inventoryText);
+  };
+
+  this.physics.add.overlap(
+    this.player,
+    this.items,
+    this.collectItem,
+    null,
+    this
+  );
 
   // Define animations (adjust frame numbers if needed)
   this.anims.create({
@@ -100,6 +128,15 @@ function create() {
   console.log("Map loaded:", map);
   console.log("Tileset loaded:", tileset);
   console.log("Background Layer:", backgroundLayer);
+
+  this.inventoryText = this.add.text(16, 16, "Inventory: ", {
+    fontSize: "16px",
+    fill: "#fff",
+    backgroundColor: "#000",
+    padding: { x: 10, y: 5 },
+  });
+
+  this.inventoryText.setDepth(10);
 }
 
 function update() {
