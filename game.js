@@ -26,6 +26,8 @@ function preload() {
 
   this.load.image("Tiles", "assets/Tiles.png"); // Tileset image
   this.load.tilemapTiledJSON("map", "assets/map.json"); // Tilemap JSON file
+  this.load.image("buildingTiles", "assets/building_tilemap.png"); // Load new tileset
+
   this.load.image("stuffedPeanut", "assets/stuffedPeanut.png");
 }
 
@@ -35,8 +37,21 @@ function create() {
 
   // Load the tilemap
   const map = this.make.tilemap({ key: "map" });
-  const tileset = map.addTilesetImage("Tiles", "Tiles"); // Match name in Tiled
-  const backgroundLayer = map.createLayer("Tile Layer 1", tileset, 0, 0);
+
+  const tileset = map.addTilesetImage("Tiles", "Tiles");
+  const buildingTileset = map.addTilesetImage(
+    "building_tilemap",
+    "buildingTiles"
+  );
+
+  // Load Tile Layer 1 with both tilesets
+  const backgroundLayer = map.createLayer(
+    "Tile Layer 1",
+    [tileset, buildingTileset],
+    0,
+    0
+  );
+
   // Add player sprite at (400, 300) using the first frame of the spritesheet
   this.player = this.physics.add.sprite(100, 100, "player", 0); // Force frame 0
 
