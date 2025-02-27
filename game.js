@@ -18,9 +18,10 @@ const config = {
 const game = new Phaser.Game(config);
 
 function preload() {
-  this.load.spritesheet("player", "assets/player_spritesheet.png", {
-    frameWidth: 80, // Adjust this based on your sprite size
-    frameHeight: 110,
+  console.log("Wizard sprite is loading...");
+  this.load.spritesheet("player", "assets/wizard_run.png", {
+    frameWidth: 64, // Adjust this based on your sprite size
+    frameHeight: 64,
   });
 
   this.load.image("Tiles", "assets/Tiles.png"); // Tileset image
@@ -37,7 +38,11 @@ function create() {
   const tileset = map.addTilesetImage("Tiles", "Tiles"); // Match name in Tiled
   const backgroundLayer = map.createLayer("Tile Layer 1", tileset, 0, 0);
   // Add player sprite at (400, 300) using the first frame of the spritesheet
-  this.player = this.physics.add.sprite(400, 300, "player", 0);
+  this.player = this.physics.add.sprite(100, 100, "player", 0); // Force frame 0
+
+  console.log("Player sprite created:", this.player);
+  console.log("Loaded frames:", this.textures.get("player").getFrameNames());
+
   this.player.setCollideWorldBounds(true); // Prevents leaving the screen
   this.player.setDepth(1); // Ensures the player appears above other objects
 
@@ -69,56 +74,56 @@ function create() {
   // Define animations (adjust frame numbers if needed)
   this.anims.create({
     key: "walk-down",
-    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frames: this.anims.generateFrameNumbers("player", { start: 0, end: 5 }), // Using all frames
     frameRate: 10,
     repeat: -1,
   });
 
   this.anims.create({
     key: "walk-left",
-    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frames: this.anims.generateFrameNumbers("player", { start: 0, end: 5 }),
     frameRate: 10,
     repeat: -1,
   });
 
   this.anims.create({
     key: "walk-right",
-    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frames: this.anims.generateFrameNumbers("player", { start: 0, end: 5 }),
     frameRate: 10,
     repeat: -1,
   });
 
   this.anims.create({
     key: "walk-up",
-    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frames: this.anims.generateFrameNumbers("player", { start: 0, end: 5 }),
     frameRate: 10,
     repeat: -1,
   });
 
   this.anims.create({
     key: "walk-up-left",
-    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frames: this.anims.generateFrameNumbers("player", { start: 0, end: 5 }),
     frameRate: 10,
     repeat: -1,
   });
 
   this.anims.create({
     key: "walk-up-right",
-    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frames: this.anims.generateFrameNumbers("player", { start: 0, end: 5 }),
     frameRate: 10,
     repeat: -1,
   });
 
   this.anims.create({
     key: "walk-down-left",
-    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frames: this.anims.generateFrameNumbers("player", { start: 0, end: 5 }),
     frameRate: 10,
     repeat: -1,
   });
 
   this.anims.create({
     key: "walk-down-right",
-    frames: this.anims.generateFrameNumbers("player", { start: 9, end: 10 }),
+    frames: this.anims.generateFrameNumbers("player", { start: 0, end: 5 }),
     frameRate: 10,
     repeat: -1,
   });
@@ -135,6 +140,8 @@ function create() {
   this.toggleInventoryKey = this.input.keyboard.addKey(
     Phaser.Input.Keyboard.KeyCodes.I
   );
+
+  console.log(this.anims.anims.entries);
 }
 
 function update() {
