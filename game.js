@@ -44,13 +44,24 @@ function create() {
     "buildingTiles"
   );
 
-  // Load Tile Layer 1 with both tilesets
+  // Load the background layer
   const backgroundLayer = map.createLayer(
-    "Tile Layer 1",
-    [tileset, buildingTileset],
+    "Tile Layer 1", // Make sure this matches exactly with Tiled
+    [tileset, buildingTileset], // Ensure it can access both tilesets
     0,
     0
   );
+  backgroundLayer.setDepth(0); // Ensure it's the lowest layer
+
+  // Load the new Buildings layer
+  const buildingsLayer = map.createLayer(
+    "Buildings", // Layer name from Tiled
+    buildingTileset, // Tileset for the buildings
+    0,
+    0
+  );
+
+  buildingsLayer.setDepth(2); // Ensure it's above the background
 
   // Add player sprite at (400, 300) using the first frame of the spritesheet
   this.player = this.physics.add.sprite(100, 100, "player", 0); // Force frame 0
