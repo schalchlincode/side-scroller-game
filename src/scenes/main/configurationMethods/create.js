@@ -1,31 +1,24 @@
 import mainSceneState from "../mainSceneState";
 import * as Phaser from "phaser";
 
-/**
- * All string literals in this file come from the Tiles map file.
- */
-
 const KEYS = mainSceneState.CONSTANTS.KEYS;
 
 function createMap(phaser) {
   // Creates the tilemap from the JSON loaded in preload
-  const map = phaser.make.tilemap({ key: KEYS.TILE_MAP });
+  const map = phaser.make.tilemap({ key: KEYS.TILES.MAP });
 
   // The first argument, in the below function calls, is the name of the tileset in the map file
   // The second argument is the identifier used in the preload function to load the file into phaser
   // Essentially we are linking information about the tileset from the map file to the loaded asset in phaser
-  const ground = map.addTilesetImage("Tiles", KEYS.IMAGES.TILES);
-  const buildingTileset = map.addTilesetImage(
-    "building_tilemap",
-    KEYS.IMAGES.BUILDING_TILES
-  );
+  const tileSet = map.addTilesetImage(KEYS.TILES.TILES, KEYS.IMAGES.TILES);
+  const buildingTileSet = map.addTilesetImage(KEYS.TILES.BUILDING_TILES, KEYS.IMAGES.BUILDING_TILES);
 
   // Load the background layer
-  const backgroundLayer = map.createLayer("Tile Layer 1", ground, 0, 0);
-  backgroundLayer.setDepth(mainSceneState.CONSTANTS.DEPTHS.Background);
+  const tileLayer = map.createLayer(KEYS.TILES.LAYERS.TILE_LAYER, tileSet, 0, 0);
+  tileLayer.setDepth(mainSceneState.CONSTANTS.DEPTHS.Background);
 
   // Load the Buildings layer
-  const buildingsLayer = map.createLayer("Buildings", buildingTileset, 0, 0);
+  const buildingsLayer = map.createLayer(KEYS.TILES.LAYERS.BUILDING_LAYER, buildingTileSet, 0, 0);
   buildingsLayer.setDepth(mainSceneState.CONSTANTS.DEPTHS.Foreground); // Ensure it's above the background
 }
 

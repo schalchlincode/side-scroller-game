@@ -6,10 +6,7 @@ export default (phaser) => {
   phaser.load.spritesheet(
     keys.SPRITES.PLAYER,
     "src/assets/images/wizard_run.png",
-    {
-      frameWidth: 64, // Adjust this based on your sprite size
-      frameHeight: 64,
-    }
+    { frameWidth: 64, frameHeight: 64 } // Adjust this based on your sprite size
   );
 
   // Load assets into Phaser - loaded assets are still unused

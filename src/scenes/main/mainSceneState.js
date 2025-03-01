@@ -10,6 +10,15 @@ function MainSceneState() {
     // Keys are string references to anything phaser has created
     // A poor system, imo, but you can treat this as an index
     KEYS: {
+      TILES: { // these values come from the Tiles map file directly
+        MAP: "map",
+        TILES: "Tiles",
+        BUILDING_TILES: "building_tilemap",
+        LAYERS: {
+          TILE_LAYER: "Tile Layer 1",
+          BUILDING_LAYER: "Buildings"
+        }
+      },
       SPRITES: {
         PLAYER: "player",
       },
