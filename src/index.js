@@ -1,19 +1,5 @@
 import * as Phaser from "phaser";
-import Game from "./Game";
-
-const game = Game();
-
-function preload() {
-  game.configurationMethods.preload(this);
-}
-
-function create() {
-  game.configurationMethods.create(this);
-}
-
-function update() {
-  game.configurationMethods.update(this);
-}
+import main from "./scenes/main/mainScene";
 
 const config = {
   type: Phaser.AUTO,
@@ -23,11 +9,7 @@ const config = {
     default: "arcade",
     arcade: { debug: true },
   },
-  scene: {
-    preload,
-    create,
-    update,
-  },
+  scene: main,
 };
 
 const phaser = new Phaser.Game(config);

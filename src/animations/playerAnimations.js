@@ -1,4 +1,4 @@
-function configurePlayerAnimations(phaser) {
+function configure(phaser) {
   // Define animations (adjust frame numbers if needed)
   phaser.anims.create({
     key: "walk-down",
@@ -58,5 +58,5 @@ function configurePlayerAnimations(phaser) {
 }
 
 export default {
-  configurePlayerAnimations,
+  configure,
 };
