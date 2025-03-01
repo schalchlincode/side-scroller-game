@@ -1,6 +1,8 @@
 import mainSceneState from "../mainSceneState";
 import * as Phaser from "phaser";
 
+const KEYS = mainSceneState.CONSTANTS.KEYS
+
 function readInputs() {
   // Toggle inventory visibility when "I" is pressed
   if (Phaser.Input.Keyboard.JustDown(mainSceneState.inputs.toggleInventory)) {
@@ -20,44 +22,40 @@ function readInputs() {
     mainSceneState.inputs.cursors.up.isDown
   ) {
     mainSceneState.entities.player.setVelocity(-200, -200);
-    mainSceneState.entities.player.anims.play("walk-up-left", true);
-    return;
+    mainSceneState.entities.player.anims.play(KEYS.ANIMATIONS.WALK, true);
   } else if (
     mainSceneState.inputs.cursors.right.isDown &&
     mainSceneState.inputs.cursors.up.isDown
   ) {
     mainSceneState.entities.player.setVelocity(200, -200);
-    mainSceneState.entities.player.anims.play("walk-up-right", true);
-    return;
+    mainSceneState.entities.player.anims.play(KEYS.ANIMATIONS.WALK, true);
   } else if (
     mainSceneState.inputs.cursors.left.isDown &&
     mainSceneState.inputs.cursors.down.isDown
   ) {
     mainSceneState.entities.player.setVelocity(-200, 200);
-    mainSceneState.entities.player.anims.play("walk-down-left", true);
-    return;
+    mainSceneState.entities.player.anims.play(KEYS.ANIMATIONS.WALK, true);
   } else if (
     mainSceneState.inputs.cursors.right.isDown &&
     mainSceneState.inputs.cursors.down.isDown
   ) {
     mainSceneState.entities.player.setVelocity(200, 200);
-    mainSceneState.entities.player.anims.play("walk-down-right", true);
-    return;
+    mainSceneState.entities.player.anims.play(KEYS.ANIMATIONS.WALK, true);
   }
 
   // Regular movement
-  if (mainSceneState.inputs.cursors.left.isDown) {
+  else if (mainSceneState.inputs.cursors.left.isDown) {
     mainSceneState.entities.player.setVelocityX(-200);
-    mainSceneState.entities.player.anims.play("walk-left", true);
+    mainSceneState.entities.player.anims.play(KEYS.ANIMATIONS.WALK, true);
   } else if (mainSceneState.inputs.cursors.right.isDown) {
     mainSceneState.entities.player.setVelocityX(200);
-    mainSceneState.entities.player.anims.play("walk-right", true);
+    mainSceneState.entities.player.anims.play(KEYS.ANIMATIONS.WALK, true);
   } else if (mainSceneState.inputs.cursors.up.isDown) {
     mainSceneState.entities.player.setVelocityY(-200);
-    mainSceneState.entities.player.anims.play("walk-up", true);
+    mainSceneState.entities.player.anims.play(KEYS.ANIMATIONS.WALK, true);
   } else if (mainSceneState.inputs.cursors.down.isDown) {
     mainSceneState.entities.player.setVelocityY(200);
-    mainSceneState.entities.player.anims.play("walk-down", true);
+    mainSceneState.entities.player.anims.play(KEYS.ANIMATIONS.WALK, true);
   } else {
     mainSceneState.entities.player.anims.stop();
   }

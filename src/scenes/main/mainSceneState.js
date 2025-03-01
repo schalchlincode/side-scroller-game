@@ -7,6 +7,22 @@ function MainSceneState() {
       UIBackground: 10,
       UIForeground: 11,
     },
+    // Keys are string references to anything phaser has created
+    // A poor system, imo, but you can treat this as an index
+    KEYS: {
+      SPRITES: {
+        PLAYER: "player",
+      },
+      TILE_MAP: "map",
+      IMAGES: {
+        TILES: "tiles",
+        BUILDING_TILES: "buildingTiles",
+        STUFFED_PEANUT: "stuffedPeanut",
+      },
+      ANIMATIONS: {
+        WALK: "walk"
+      }
+    },
   };
 
   // Always initialize new state, never set these values to undefined

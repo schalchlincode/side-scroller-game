@@ -1,56 +1,48 @@
 import mainSceneState from "../mainSceneState";
-import playerAnimations from "../../../animations/playerAnimations";
 import * as Phaser from "phaser";
+
+/**
+ * All string literals in this file come from the Tiles map file.
+ */
+
+const KEYS = mainSceneState.CONSTANTS.KEYS;
 
 function createMap(phaser) {
   // Creates the tilemap from the JSON loaded in preload
-  const map = phaser.make.tilemap({ key: "map" });
-  // The first argument is the name of the tileset in the map file
+  const map = phaser.make.tilemap({ key: KEYS.TILE_MAP });
+
+  // The first argument, in the below function calls, is the name of the tileset in the map file
   // The second argument is the identifier used in the preload function to load the file into phaser
-  // Essentially we are linking information about the tileset from the map file to the loaded asset
-  const ground = map.addTilesetImage("Tiles", "tiles");
+  // Essentially we are linking information about the tileset from the map file to the loaded asset in phaser
+  const ground = map.addTilesetImage("Tiles", KEYS.IMAGES.TILES);
   const buildingTileset = map.addTilesetImage(
     "building_tilemap",
-    "buildingTiles"
+    KEYS.IMAGES.BUILDING_TILES
   );
+
   // Load the background layer
-  const backgroundLayer = map.createLayer(
-    "Tile Layer 1", // Layer name from Tiled
-    ground,
-    0,
-    0
-  );
-  backgroundLayer.setDepth(mainSceneState.CONSTANTS.DEPTHS.Background); // Ensure it's the lowest layer
+  const backgroundLayer = map.createLayer("Tile Layer 1", ground, 0, 0);
+  backgroundLayer.setDepth(mainSceneState.CONSTANTS.DEPTHS.Background);
+
   // Load the Buildings layer
-  const buildingsLayer = map.createLayer(
-    "Buildings", // Layer name from Tiled
-    buildingTileset,
-    0,
-    0
-  );
+  const buildingsLayer = map.createLayer("Buildings", buildingTileset, 0, 0);
   buildingsLayer.setDepth(mainSceneState.CONSTANTS.DEPTHS.Foreground); // Ensure it's above the background
 }
 
 function createEntities(phaser) {
   // Load at coordinates (100, 100) and force frame 0 of the sprite
-  mainSceneState.entities.player = phaser.physics.add.sprite(
-    100,
-    100,
-    "player",
-    0
-  );
+  mainSceneState.entities.player = phaser.physics.add.sprite(100, 100, KEYS.SPRITES.PLAYER, 0);
   mainSceneState.entities.player.setCollideWorldBounds(true); // Prevents leaving the screen
-  mainSceneState.entities.player.setDepth(
-    mainSceneState.CONSTANTS.DEPTHS.Foreground
-  ); // Ensures the player appears above the background layer
-  playerAnimations.configure(phaser);
+  mainSceneState.entities.player.setDepth(mainSceneState.CONSTANTS.DEPTHS.Foreground);
+  phaser.anims.create({
+    key: KEYS.ANIMATIONS.WALK,
+    frames: phaser.anims.generateFrameNumbers(KEYS.SPRITES.PLAYER, { start: 0, end: 5 }), // Using all frames
+    frameRate: 10,
+    repeat: -1,
+  });
 
   mainSceneState.entities.items = phaser.physics.add.group(); // Create a group for items
-  const peanut = mainSceneState.entities.items.create(
-    150,
-    150,
-    "stuffedPeanut"
-  ); // Spawn peanut at (150,150)
+  const peanut = mainSceneState.entities.items.create(150, 150, KEYS.IMAGES.STUFFED_PEANUT);
   peanut.setScale(2);
   peanut.setDepth(mainSceneState.CONSTANTS.DEPTHS.Foreground); // Ensure it’s above the background
 
