@@ -55,7 +55,6 @@ function configurePlayerAnimations(phaser) {
     frameRate: 10,
     repeat: -1,
   });
-  // console.log(phaser.anims.anims.entries);
 }
 
 export default {
