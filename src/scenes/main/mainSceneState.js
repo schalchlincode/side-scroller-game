@@ -10,10 +10,12 @@ function MainSceneState() {
     // Keys are string references to anything phaser has created
     // A poor system, imo, but you can treat this as an index
     KEYS: {
-      TILES: { // these values come from the Tiles map file directly
+      TILED: { // these values come from the Tiled map file directly
         MAP: "map",
-        TILES: "Tiles",
-        BUILDING_TILES: "building_tilemap",
+        TILE_SETS: {
+          TILES: "Tiles",
+          BUILDING_TILES: "building_tilemap",
+        },
         LAYERS: {
           TILE_LAYER: "Tile Layer 1",
           BUILDING_LAYER: "Buildings"
@@ -39,6 +41,12 @@ function MainSceneState() {
     inventory: [],
     inventoryVisible: true,
   };
+
+  // Layers imported into phaser from Tiled
+  const layers = {
+    background: undefined,
+    building: undefined
+  }
 
   // UI Elements - populated during phaser Create phase
   const ui = {
@@ -69,7 +77,7 @@ function MainSceneState() {
     },
   };
 
-  return { CONSTANTS, state, ui, inputs, entities, events };
+  return { CONSTANTS, state, ui, inputs, entities, events, layers };
 }
 
 export default MainSceneState();

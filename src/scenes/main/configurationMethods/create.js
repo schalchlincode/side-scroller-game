@@ -4,22 +4,22 @@ import * as Phaser from "phaser";
 const KEYS = mainSceneState.CONSTANTS.KEYS;
 
 function createMap(phaser) {
-  // Creates the tilemap from the JSON loaded in preload
-  const map = phaser.make.tilemap({ key: KEYS.TILES.MAP });
+  // Creates the tilemap from the tiled JSON file loaded in preload
+  const map = phaser.make.tilemap({ key: KEYS.TILED.MAP });
 
-  // The first argument, in the below function calls, is the name of the tileset in the map file
-  // The second argument is the identifier used in the preload function to load the file into phaser
-  // Essentially we are linking information about the tileset from the map file to the loaded asset in phaser
-  const tileSet = map.addTilesetImage(KEYS.TILES.TILES, KEYS.IMAGES.TILES);
-  const buildingTileSet = map.addTilesetImage(KEYS.TILES.BUILDING_TILES, KEYS.IMAGES.BUILDING_TILES);
+  // The first argument, in the below function calls, is the name of the tileset from the tiled map file
+  // The second argument is the key used in the preload function to load the file into phaser
+  // Essentially we are linking information about the 'tilesets' loaded from tiled and adding them into phaser
+  const tileSet = map.addTilesetImage(KEYS.TILED.TILE_SETS.TILES, KEYS.IMAGES.TILES);
+  const buildingTileSet = map.addTilesetImage(KEYS.TILED.TILE_SETS.BUILDING_TILES, KEYS.IMAGES.BUILDING_TILES);
 
   // Load the background layer
-  const tileLayer = map.createLayer(KEYS.TILES.LAYERS.TILE_LAYER, tileSet, 0, 0);
-  tileLayer.setDepth(mainSceneState.CONSTANTS.DEPTHS.Background);
+  mainSceneState.layers.background = map.createLayer(KEYS.TILED.LAYERS.TILE_LAYER, tileSet, 0, 0);
+  mainSceneState.layers.background.setDepth(mainSceneState.CONSTANTS.DEPTHS.Background);
 
   // Load the Buildings layer
-  const buildingsLayer = map.createLayer(KEYS.TILES.LAYERS.BUILDING_LAYER, buildingTileSet, 0, 0);
-  buildingsLayer.setDepth(mainSceneState.CONSTANTS.DEPTHS.Foreground); // Ensure it's above the background
+  mainSceneState.layers.building = map.createLayer(KEYS.TILED.LAYERS.BUILDING_LAYER, buildingTileSet, 0, 0);
+  mainSceneState.layers.building.setDepth(mainSceneState.CONSTANTS.DEPTHS.Foreground); // Ensure it's above the background
 }
 
 function createEntities(phaser) {
@@ -38,13 +38,6 @@ function createEntities(phaser) {
   const peanut = mainSceneState.entities.items.create(150, 150, KEYS.IMAGES.STUFFED_PEANUT);
   peanut.setScale(2);
   peanut.setDepth(mainSceneState.CONSTANTS.DEPTHS.Foreground); // Ensure it’s above the background
-
-  // Define what happens when a player overlaps with an item, with the collectItem function
-  phaser.physics.add.overlap(
-    mainSceneState.entities.player,
-    mainSceneState.entities.items,
-    mainSceneState.events.collectItem
-  );
 }
 
 function createInventoryUI(phaser) {
@@ -74,13 +67,30 @@ function createInventoryUI(phaser) {
   mainSceneState.ui.inventory.text.setVisible(false);
 }
 
-export default (phaser) => {
-  createMap(phaser);
-  createEntities(phaser);
-  createInventoryUI(phaser);
+function createPhysics(phaser) {
+  // Building Layer Collision
+  phaser.physics.add.collider(mainSceneState.entities.player, mainSceneState.layers.building);
+  mainSceneState.layers.building.setCollisionBetween(3856, 5181);
 
+  // Items Overlap Behavior
+  phaser.physics.add.overlap(
+    mainSceneState.entities.player,
+    mainSceneState.entities.items,
+    mainSceneState.events.collectItem
+  );
+}
+
+function createInputs(phaser) {
   mainSceneState.inputs.cursors = phaser.input.keyboard.createCursorKeys();
   mainSceneState.inputs.toggleInventory = phaser.input.keyboard.addKey(
     Phaser.Input.Keyboard.KeyCodes.I
   );
+}
+
+export default (phaser) => {
+  createMap(phaser);
+  createEntities(phaser);
+  createInventoryUI(phaser);
+  createPhysics(phaser);
+  createInputs(phaser);
 };
