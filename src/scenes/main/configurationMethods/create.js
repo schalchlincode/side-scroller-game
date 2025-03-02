@@ -70,6 +70,7 @@ function createInventoryUI(phaser) {
 function createPhysics(phaser) {
   // Building Layer Collision
   phaser.physics.add.collider(mainSceneState.entities.player, mainSceneState.layers.building);
+  // Collide with the actual building tile IDs in the layer from the Tiled software...
   mainSceneState.layers.building.setCollisionBetween(3856, 5181);
 
   // Items Overlap Behavior
