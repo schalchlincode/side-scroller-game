@@ -11,7 +11,7 @@ export default (phaser) => {
 
   // Load assets into Phaser - loaded assets are still unused
   // The first argument passed to load methods are the identifiers used later to 'add' them to the game
-  phaser.load.tilemapTiledJSON(keys.TILE_MAP, "src/assets/tiles/map.json"); // Tilemap JSON file
+  phaser.load.tilemapTiledJSON(keys.TILES.MAP, "src/assets/tiles/map.json"); // Tilemap JSON file
   // The first tileset defined in the Tilemap JSON file
   phaser.load.image(keys.IMAGES.TILES, "src/assets/tiles/Tiles.png");
   // The second tileset defined in the Tilemap JSON file

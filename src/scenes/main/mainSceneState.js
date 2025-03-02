@@ -31,7 +31,7 @@ function MainSceneState() {
       ANIMATIONS: {
         WALK: "walk"
       }
-    },
+    }
   };
 
   // Always initialize new state, never set these values to undefined
@@ -60,7 +60,7 @@ function MainSceneState() {
     items: undefined,
   };
 
-  // Methods around entity interactions (see  above entities)
+  // Methods around entity interactions (see above entities)
   const events = {
     collectItem: (player, item) => {
       item.destroy(); // Remove peanut from world

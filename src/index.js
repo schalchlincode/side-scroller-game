@@ -9,7 +9,7 @@ const config = {
     default: "arcade",
     arcade: { debug: true },
   },
-  scene: main,
+  scene: main
 };
 
 const phaser = new Phaser.Game(config);
