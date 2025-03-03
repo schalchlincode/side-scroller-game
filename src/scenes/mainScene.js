@@ -37,48 +37,47 @@ class MainScene extends Phaser.Scene {
     }
   };
 
-  constructor() {
-    super()
-    // Always initialize new state, never set these values to undefined
-    this.state = {
-      inventory: [],
-      inventoryVisible: true
-    }
+  // Game variables that are likely to change values over time
+  state = {
+    inventory: [], // Right now this array just holds string values
+    inventoryVisible: true
+  }
 
-    // Layers imported into phaser from Tiled - populated during phaser Create phase
-    this.layers = {
-      background: undefined,
-      building: undefined
-    }
+  // Layers imported into phaser from Tiled - populated during phaser Create phase
+  // https://docs.phaser.io/api-documentation/class/tilemaps-tilemaplayer
+  layers = {
+    background: undefined,
+    building: undefined
+  }
 
-    // UI Elements - populated during phaser Create phase
-    this.ui = {
-      inventory: {
-        background: undefined,
-        text: undefined
-      }
+  // UI Elements - populated during phaser Create phase
+  ui = {
+    inventory: {
+      background: undefined, // Phaser.GameObjects.Rectangle: https://docs.phaser.io/api-documentation/class/gameobjects-rectangle
+      text: undefined // Phaser.GameObjects.Text: https://docs.phaser.io/api-documentation/class/gameobjects-text
     }
+  }
 
-    // Registered Inputs - populated during phaser Create phase, read during phaser Update phase
-    this.inputs = {
-      cursors: undefined,
-      toggleInventory: undefined
-    }
+  // Registered Inputs - populated during phaser Create phase, read during phaser Update phase
+  // https://docs.phaser.io/api-documentation/class/input-keyboard-key
+  inputs = {
+    cursors: undefined,
+    toggleInventory: undefined
+  }
 
-    // Interactive Elements - populated during phaser Create phase (see below)
-    this.entities = {
-      player: undefined,
-      items: undefined,
-    };
+  // Interactive Elements - populated during phaser Create phase (see below)
+  entities = {
+    player: undefined, // Phaser.Types.Physics.Arcade.SpriteWithDynamicBody: https://docs.phaser.io/api-documentation/class/physics-arcade-sprite
+    items: undefined, // Phaser.Physics.Arcade.Group: https://docs.phaser.io/api-documentation/class/physics-arcade-group
+  };
 
-    // Interactions that occur between interactive elements (see above)
-    this.interactions = {
-      collectItem: (player, item) => {
-        item.destroy(); // Remove peanut from world
-        this.state.inventory.push("Stuffed Peanut"); // Add to inventory
-        this.ui.inventory.text.setText("Inventory: " + this.state.inventory.join(", "));
-      },
-    }
+  // Interactions that occur between interactive elements (see above)
+  interactions = {
+    collectItem: (player, item) => {
+      item.destroy(); // Remove peanut from world
+      this.state.inventory.push("Stuffed Peanut"); // Add to inventory
+      this.ui.inventory.text.setText("Inventory: " + this.state.inventory.join(", "));
+    },
   }
 
   // Singleton pattern to be able to use the same instance of this class at all times wherever its imported.
