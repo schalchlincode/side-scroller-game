@@ -233,10 +233,16 @@ class MainScene extends Phaser.Scene {
     );
     photoFrame.setScale(0.1);
     photoFrame.setDepth(this.CONSTANTS.DEPTHS.Foreground);
+
+    // ADD THE DOOR ENTITY (Trigger Zone)
+    this.entities.door = this.physics.add.staticSprite(400, 400, null);
+    this.entities.door.setSize(50, 100).setVisible(false); // Invisible trigger area
+    console.log("Door entity created:", this.entities.door);
   }
 
   #createInventoryUI() {
     // Background panel
+    //ADD: dynamic inventory background
     this.ui.inventory.background = this.add.rectangle(
       100,
       100,
@@ -261,7 +267,7 @@ class MainScene extends Phaser.Scene {
   #createPhysics() {
     // Building Layer Collision
     this.physics.add.collider(this.entities.player, this.layers.building);
-    this.layers.building.setCollisionByProperty({ collides: true }); // Edit tiles in Tiled to have this custom property
+    this.layers.building.setCollisionByProperty({ collides: true });
 
     // Items Overlap Behavior
     this.physics.add.overlap(
@@ -269,6 +275,12 @@ class MainScene extends Phaser.Scene {
       this.entities.items,
       this.interactions.collectItem
     );
+
+    // ADD DOOR COLLISION DETECTION
+    this.physics.add.overlap(this.entities.player, this.entities.door, () => {
+      console.log("Door Triggered!"); // Debug message
+      this.scene.start("insideScene"); // Switch to the inside scene
+    });
   }
 
   #createInputs() {
