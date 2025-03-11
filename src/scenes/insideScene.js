@@ -1,7 +1,11 @@
 import * as Phaser from "phaser";
-import insideScene from "./insideScene";
 
-class MainScene extends Phaser.Scene {
+class InsideScene extends Phaser.Scene {
+  constructor() {
+    super({
+      key: "InsideSceneKey",
+    });
+  }
   // Do not change constant values in other parts of the code
   CONSTANTS = {
     DEPTHS: {
@@ -99,7 +103,7 @@ class MainScene extends Phaser.Scene {
   // Will be useful in the future if we switch away from this scene and back to it, to be able to preserve its previous state!
   static getInstance() {
     if (!this.instance) {
-      this.instance = new MainScene();
+      this.instance = new InsideScene();
     }
     return this.instance;
   }
@@ -280,7 +284,7 @@ class MainScene extends Phaser.Scene {
     // ADD DOOR COLLISION DETECTION
     this.physics.add.overlap(this.entities.player, this.entities.door, () => {
       console.log("Door Triggered!"); // Debug message
-      this.scene.start("InsideSceneKey"); // Switch to the inside scene
+      this.scene.start(InsideScene); // Switch to the inside scene
     });
   }
 
@@ -366,4 +370,4 @@ class MainScene extends Phaser.Scene {
   }
 }
 
-export default MainScene.getInstance();
+export default InsideScene.getInstance();
