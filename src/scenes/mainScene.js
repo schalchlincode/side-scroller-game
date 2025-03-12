@@ -1,5 +1,4 @@
 import * as Phaser from "phaser";
-import insideScene from "./insideScene";
 
 class MainScene extends Phaser.Scene {
   // Do not change constant values in other parts of the code
@@ -237,8 +236,7 @@ class MainScene extends Phaser.Scene {
 
     // ADD THE DOOR ENTITY (Trigger Zone)
     this.entities.door = this.physics.add.staticSprite(400, 400, null);
-    this.entities.door.setSize(50, 100).setVisible(false); // Invisible trigger area
-    console.log("Door entity created:", this.entities.door);
+    this.entities.door.setSize(50, 50).setVisible(false); // Invisible trigger area
   }
 
   #createInventoryUI() {
