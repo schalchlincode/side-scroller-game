@@ -32,15 +32,6 @@ class InsideScene extends Phaser.Scene {
     this.#readInputs();
   }
 
-  // Commented out map-related code
-  // #createMap() {
-  //   const map = this.make.tilemap({ key: "map" });
-  //   const tileSet = map.addTilesetImage("Tiles", "tiles");
-  //   const buildingTileSet = map.addTilesetImage("building_tilemap", "buildingTiles");
-  //   this.layers.background = map.createLayer("Tile Layer 1", tileSet, 0, 0);
-  //   this.layers.building = map.createLayer("Buildings", buildingTileSet, 0, 0);
-  // }
-
   #createEntities() {
     this.entities = {};
     this.entities.player = this.physics.add.sprite(100, 100, "player", 0);

@@ -277,7 +277,6 @@ class MainScene extends Phaser.Scene {
 
     // ADD DOOR COLLISION DETECTION
     this.physics.add.overlap(this.entities.player, this.entities.door, () => {
-      console.log("Door Triggered!"); // Debug message
       this.scene.start("InsideSceneKey", { state: this.state });
       // Switch to the inside scene
     });
