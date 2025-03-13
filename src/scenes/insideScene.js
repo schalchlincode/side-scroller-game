@@ -2,11 +2,16 @@ import * as Phaser from "phaser";
 
 class InsideScene extends Phaser.Scene {
   constructor() {
-    super({
-      key: "InsideSceneKey",
-    });
+    super({ key: "InsideSceneKey" });
+    this.state = { inventory: [] }; // Default empty inventory
   }
 
+  // This method receives the state when switching scenes
+  init(data) {
+    if (data && data.state) {
+      this.state = data.state;
+    }
+  }
   preload() {
     this.load.spritesheet("player", "src/assets/images/wizard_run.png", {
       frameWidth: 64,
@@ -57,7 +62,12 @@ class InsideScene extends Phaser.Scene {
         .setOrigin(0, 0)
         .setVisible(false),
       text: this.add
-        .text(110, 110, "Inventory:", { fontSize: "20px", fill: "#fff" })
+        .text(
+          110,
+          110,
+          "Inventory: " + (this.state.inventory.join(", ") || "Empty"),
+          { fontSize: "20px", fill: "#fff" }
+        )
         .setVisible(false),
     };
   }
