@@ -205,6 +205,10 @@ class MainScene extends Phaser.Scene {
       0
     );
     this.entities.player.setCollideWorldBounds(true); // Prevents leaving the screen
+
+    this.entities.player.setSize(32, 48); // Adjust width and height as needed
+    this.entities.player.setOffset(16, 22); // Adjust offset to center the hitbox
+
     this.entities.player.setDepth(this.CONSTANTS.DEPTHS.Foreground);
     this.anims.create({
       key: this.CONSTANTS.KEYS.ANIMATIONS.WALK,
