@@ -26,6 +26,7 @@ class MainScene extends Phaser.Scene {
       },
       SPRITES: {
         PLAYER: "player",
+        NPC: "catSprite",
       },
       IMAGES: {
         TILES: "tiles",
@@ -112,6 +113,12 @@ class MainScene extends Phaser.Scene {
       this.CONSTANTS.KEYS.SPRITES.PLAYER,
       "src/assets/images/wizard_run.png",
       { frameWidth: 64, frameHeight: 64 } // Adjust this based on your sprite size
+    );
+
+    this.load.spritesheet(
+      this.CONSTANTS.KEYS.SPRITES.NPC,
+      "src/assets/images/cat_spritesheet.png",
+      { frameWidth: 64, frameHeight: 64 }
     );
 
     // Tiled map JSON file
@@ -210,6 +217,27 @@ class MainScene extends Phaser.Scene {
     this.entities.player.setOffset(16, 22); // Adjust offset to center the hitbox
 
     this.entities.player.setDepth(this.CONSTANTS.DEPTHS.Foreground);
+
+    this.entities.cat = this.physics.add.sprite(
+      300,
+      300,
+      this.CONSTANTS.KEYS.SPRITES.NPC,
+      0
+    );
+    this.entities.cat.setDepth(this.CONSTANTS.DEPTHS.Foreground);
+
+    this.anims.create({
+      key: "catSleep",
+      frames: this.anims.generateFrameNumbers(this.CONSTANTS.KEYS.SPRITES.NPC, {
+        start: 8,
+        end: 11,
+      }),
+      frameRate: 2,
+      repeat: -1,
+    });
+
+    this.entities.cat.anims.play("catSleep", true);
+
     this.anims.create({
       key: this.CONSTANTS.KEYS.ANIMATIONS.WALK,
       frames: this.anims.generateFrameNumbers(
@@ -227,7 +255,7 @@ class MainScene extends Phaser.Scene {
       150,
       this.CONSTANTS.KEYS.IMAGES.STUFFED_PEANUT
     );
-    peanut.setScale(2);
+    peanut.setScale(0.1);
     peanut.setDepth(this.CONSTANTS.DEPTHS.Foreground); // Ensure it’s above the background
 
     const photoFrame = this.entities.items.create(
