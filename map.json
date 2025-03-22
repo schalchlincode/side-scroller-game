@@ -36,7 +36,7 @@
         {
          "columns":13,
          "firstgid":1,
-         "image":"Tiles.png",
+         "image":"src\/assets\/tiles\/Tiles.png",
          "imageheight":176,
          "imagewidth":208,
          "margin":0,
@@ -49,7 +49,7 @@
         {
          "columns":120,
          "firstgid":144,
-         "image":"building_tilemap.png",
+         "image":"src\/assets\/tiles\/building_tilemap.png",
          "imageheight":768,
          "imagewidth":1920,
          "margin":0,
